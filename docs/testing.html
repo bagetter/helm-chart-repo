@@ -1,0 +1,18 @@
+<h1>Testing &amp; Validation</h1>
+<h2>Helm Lint</h2>
+<p>Always lint custom values before deployment:</p>
+<pre><code class="language-bash">helm lint charts/bagetter -f custom-values.yaml
+</code></pre>
+<h2>Helm Unit Tests</h2>
+<p>Install the <a href="https://github.com/helm-unittest/helm-unittest">helm-unittest</a> plugin and run the bundled smoke tests:</p>
+<pre><code class="language-bash">helm plugin install https://github.com/helm-unittest/helm-unittest   # first run
+helm unittest charts/bagetter
+</code></pre>
+<p>The suites cover:</p>
+<ul>
+<li>Default filesystem/sqlite configuration</li>
+<li>Remote storage deployments (PVC skipped for S3)</li>
+<li>Mirror authentication with headers and secrets</li>
+<li>Multiple API keys and feed credentials</li>
+</ul>
+<p>Run these checks in CI alongside <code>helm lint</code> to catch template regressions early.</p>

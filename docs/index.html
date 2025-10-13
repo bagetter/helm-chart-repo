@@ -1,0 +1,31 @@
+<h1>bagetter Helm Chart</h1>
+<p><img src="https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square" alt="Version: 1.6.0"> <img src="https://img.shields.io/badge/Type-application-informational?style=flat-square" alt="Type: application"> <img src="https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square" alt="AppVersion: 1.6.0"></p>
+<p>Deploy <a href="https://www.bagetter.com/">BaGetter</a> — an open source NuGet server — to Kubernetes with opinionated defaults and optional integrations for major storage and database providers.</p>
+<p><strong>Homepage:</strong> <a href="https://github.com/bagetter/BaGetter/tree/main/charts/bagetter">https://github.com/bagetter/BaGetter/tree/main/charts/bagetter</a></p>
+<h2>Quick Start</h2>
+<pre><code class="language-bash">helm repo add bagetter https://bagetter.github.io/helm-charts
+helm install my-bagetter bagetter/bagetter
+</code></pre>
+<p>Upgrade after editing <code>values.yaml</code>:</p>
+<pre><code class="language-bash">helm upgrade my-bagetter bagetter/bagetter -f custom-values.yaml
+</code></pre>
+<h2>Documentation</h2>
+<p>Detailed guides live in the <a href="./docs"><code>docs/</code></a> folder and are published to <a href="https://bagetter.github.io/helm-chart-repo/docs/index.html">https://bagetter.github.io/helm-chart-repo/docs/index.html</a>.</p>
+<ul>
+<li><a href="./docs/overview.md">Overview</a></li>
+<li><a href="./docs/storage.md">Storage configuration</a></li>
+<li><a href="./docs/database.md">Database providers</a></li>
+<li><a href="./docs/configuration.md">Additional configuration patterns</a></li>
+<li><a href="./docs/testing.md">Testing &amp; validation</a></li>
+<li><a href="./docs/upgrading.md">Upgrade guidance</a></li>
+</ul>
+<h2>Testing</h2>
+<p>Install the <a href="https://github.com/helm-unittest/helm-unittest">helm-unittest</a> plugin and run:</p>
+<pre><code class="language-bash">helm unittest charts/bagetter
+</code></pre>
+<p>The repo keeps lint and unit tests up to date in CI to catch template regressions.</p>
+<h2>Source Links</h2>
+<ul>
+<li><a href="https://github.com/bagetter/BaGetter">https://github.com/bagetter/BaGetter</a></li>
+<li><a href="https://hub.docker.com/r/bagetter/bagetter">https://hub.docker.com/r/bagetter/bagetter</a></li>
+</ul>

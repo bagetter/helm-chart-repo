@@ -1,0 +1,115 @@
+<h1>BaGetter Helm Chart Overview</h1>
+<p>The BaGetter chart packages an opinionated Kubernetes deployment for the open-source BaGetter NuGet server. Values are organized by concern to make customization predictable and compatible with schema validation.</p>
+<h2>Configuration Structure</h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Keys</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>general</code></td>
+<td><code>replicaCount</code>, <code>imagePullSecrets</code></td>
+<td>Global runtime basics (scaling baseline, registry credentials).</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>nameOverride</code>, <code>fullnameOverride</code></td>
+<td>Override default resource naming.</td>
+</tr>
+<tr>
+<td><code>serviceAccount</code></td>
+<td><code>create</code>, <code>name</code>, <code>annotations</code>, <code>automount</code></td>
+<td>Configure the service account bound to the pod.</td>
+</tr>
+<tr>
+<td><code>workload</code></td>
+<td><code>podAnnotations</code>, <code>podLabels</code>, <code>podSecurityContext</code>, <code>containerSecurityContext</code></td>
+<td>Targeted pod/container level metadata and security settings.</td>
+</tr>
+<tr>
+<td><code>bagetter</code></td>
+<td><code>apiKey</code>, <code>image.*</code>, <code>env[]</code>, <code>resources.*</code>, <code>pathBase</code>, <code>urls</code>, <code>maxPackageSizeGiB</code></td>
+<td>Application specific knobs including container image, core server toggles, environment variables, and resource limits.</td>
+</tr>
+<tr>
+<td><code>bagetter.storage</code></td>
+<td><code>type</code>, provider-specific sub-sections (<code>fileSystem</code>, <code>azureBlobStorage</code>, <code>awsS3</code>, etc.)</td>
+<td>Select and configure the backing package storage service.</td>
+</tr>
+<tr>
+<td><code>bagetter.database</code></td>
+<td><code>type</code>, provider-specific connection settings (<code>sqlite</code>, <code>mysql</code>, <code>postgresql</code>, etc.)</td>
+<td>Configure the metadata database backend and optionally source connection strings from secrets.</td>
+</tr>
+<tr>
+<td><code>bagetter.retention</code></td>
+<td><code>maxMajorVersions</code>, <code>maxMinorVersions</code>, <code>maxPatchVersions</code>, <code>maxPrereleaseVersions</code></td>
+<td>Configure automatic package clean-up limits for SemVer segments.</td>
+</tr>
+<tr>
+<td><code>bagetter.mirror</code></td>
+<td><code>enabled</code>, <code>packageSource</code>, <code>legacy</code>, <code>packageDownloadTimeoutSeconds</code>, <code>authentication.*</code></td>
+<td>Enable read-through caching and supply upstream credentials or headers.</td>
+</tr>
+<tr>
+<td><code>bagetter.authentication</code></td>
+<td><code>apiKeys[]</code>, <code>credentials[]</code></td>
+<td>Configure additional push API keys and basic-auth credentials (with optional secret references).</td>
+</tr>
+<tr>
+<td><code>bagetter.statistics</code></td>
+<td><code>enableStatisticsPage</code>, <code>listConfiguredServices</code></td>
+<td>Control the statistics dashboard exposure and contents.</td>
+</tr>
+<tr>
+<td><code>bagetter.healthCheck</code></td>
+<td><code>path</code>, <code>statusPropertyName</code></td>
+<td>Customize the health probe endpoint path and JSON payload.</td>
+</tr>
+<tr>
+<td><code>networking.service</code></td>
+<td><code>type</code>, <code>port</code>, <code>targetPort</code></td>
+<td>Cluster networking exposure for BaGetter.</td>
+</tr>
+<tr>
+<td><code>networking.ingress</code></td>
+<td><code>enabled</code>, <code>className</code>, <code>annotations</code>, <code>hosts[]</code>, <code>tls[]</code></td>
+<td>Public ingress configuration for HTTP/S routing.</td>
+</tr>
+<tr>
+<td><code>health</code></td>
+<td><code>livenessProbe</code>, <code>readinessProbe</code></td>
+<td>Fine-tune container probe behavior.</td>
+</tr>
+<tr>
+<td><code>scaling.autoscaling</code></td>
+<td><code>enabled</code>, <code>minReplicas</code>, <code>maxReplicas</code>, <code>targetCPUUtilizationPercentage</code>, <code>targetMemoryUtilizationPercentage</code></td>
+<td>HorizontalPodAutoscaler settings.</td>
+</tr>
+<tr>
+<td><code>storage.persistence</code></td>
+<td><code>enabled</code>, <code>size</code>, <code>storageClassName</code>, <code>mountPath</code>, <code>accessModes</code></td>
+<td>Persistent volume claim management for repository storage.</td>
+</tr>
+<tr>
+<td><code>storage.volumes</code>, <code>storage.volumeMounts</code></td>
+<td>Additional Kubernetes volumes/mounts appended alongside the PVC.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>scheduling</code></td>
+<td><code>nodeSelector</code>, <code>tolerations</code>, <code>affinity</code></td>
+<td>Advanced scheduling preferences and constraints.</td>
+</tr>
+</tbody></table>
+<p>The chart also maintains legacy top-level keys (<code>replicaCount</code>, <code>service</code>, <code>persistence</code>, etc.) for compatibility with earlier releases. New deployments should prefer the structured sections above. Validation is enforced through <code>values.schema.json</code> to catch typos early.</p>
+<h2>Getting Started</h2>
+<ol>
+<li>Add the repository: <code>helm repo add bagetter https://bagetter.github.io/helm-charts</code></li>
+<li>Install with defaults: <code>helm install my-bagetter bagetter/bagetter</code></li>
+<li>Copy <code>values.yaml</code> and tailor sections described above for your environment.</li>
+</ol>
+<p>Refer to the topic-specific documents in this directory for detailed examples and guidance.</p>

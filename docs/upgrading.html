@@ -1,0 +1,9 @@
+<h1>Upgrading the Chart</h1>
+<p>When moving from versions <code>&lt;1.6.0</code> to <code>&gt;=1.6.0</code>, migrate custom values to the structured sections (<code>general</code>, <code>bagetter.storage</code>, etc.). Legacy top-level keys remain temporarily for backward compatibility but will be removed in a future major release.</p>
+<p>Recommended workflow:</p>
+<ol>
+<li>Pull the latest <code>values.yaml</code> and merge your overrides into the new structure.</li>
+<li>Run <code>helm lint</code> and <code>helm unittest charts/bagetter</code> with your values file.</li>
+<li>Use <code>helm diff upgrade</code> (via <a href="https://github.com/databus23/helm-diff">helm-diff</a>) to preview changes before applying them to production clusters.</li>
+</ol>
+<p>Document chart upgrade notes in your repository’s release process so downstream consumers stay aligned with chart behavior.</p>

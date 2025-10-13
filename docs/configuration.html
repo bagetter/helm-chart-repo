@@ -1,0 +1,64 @@
+<h1>Additional Configuration Patterns</h1>
+<h2>Mirroring &amp; Search</h2>
+<p>Enable BaGetter&#39;s read-through caching to proxy upstream feeds.</p>
+<pre><code class="language-yaml">bagetter:
+  mirror:
+    enabled: true
+    packageSource: https://api.nuget.org/v3/index.json
+    packageDownloadTimeoutSeconds: 900
+    authentication:
+      type: Basic
+      existingSecret:
+        name: bagetter-mirror
+        keys:
+          username: username
+          password: password
+  search:
+    type: Database
+</code></pre>
+<p>Set <code>legacy: true</code> when targeting NuGet v2 feeds and choose <code>Bearer</code> or <code>Custom</code> authentication if your upstream requires tokens or custom headers.</p>
+<h2>Package Retention &amp; Limits</h2>
+<p>Use retention options to prune older versions automatically.</p>
+<pre><code class="language-yaml">bagetter:
+  retention:
+    maxMajorVersions: 5
+    maxMinorVersions: 8
+    maxPatchVersions: 20
+    maxPrereleaseVersions: 10
+</code></pre>
+<h2>Authentication Options</h2>
+<p>Seed additional API keys and private-feed credentials without editing manifests.</p>
+<pre><code class="language-yaml">bagetter:
+  authentication:
+    apiKeys:
+      - existingSecret:
+          name: bagetter-extra-keys
+          key: ci-api-key
+      - key: inline-key
+    credentials:
+      - existingSecret:
+          name: bagetter-feed-creds
+          keys:
+            username: feed-user
+            password: feed-password
+      - username: reader
+        password: read-password
+</code></pre>
+<h2>Operational Controls</h2>
+<p>Adjust core BaGetter settings through <code>bagetter</code> values:</p>
+<pre><code class="language-yaml">bagetter:
+  pathBase: /bagetter
+  urls: &quot;http://0.0.0.0:8080&quot;
+  runMigrationsAtStartup: false
+  isReadOnlyMode: false
+  packageDeletionBehavior: HardDelete
+  allowPackageOverwrites: PrereleaseOnly
+  maxPackageSizeGiB: 16
+  statistics:
+    enableStatisticsPage: true
+    listConfiguredServices: true
+  healthCheck:
+    path: /healthz
+    statusPropertyName: Status
+</code></pre>
+<p>Combine these with <code>bagetter.extraEnv</code> for advanced, chart-agnostic tweaks when needed.</p>

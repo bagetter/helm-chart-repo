@@ -3,9 +3,9 @@ entries:
   bagetter:
   - apiVersion: v2
     appVersion: 1.6.0
-    created: "2025-10-12T02:08:11.168149102Z"
+    created: "2025-10-13T02:11:17.216072139Z"
     description: A Helm chart for BaGetter nuget package server
-    digest: fe13cb659e3f74876ebabf7a11725dec54d039c22bddb53cde4563d62f1d7a42
+    digest: 47a2b2b3d4f40eac2f66e9e7c3b146577ff07190e244376a5da9b2944454ea7a
     home: https://github.com/bagetter/BaGetter/tree/main/charts/BaGetter
     keywords:
     - nuget
@@ -19,4 +19,4 @@ entries:
     urls:
     - https://bagetter.github.io/helm-chart-repo/bagetter-1.6.0.tgz
     version: 1.6.0
-generated: "2025-10-12T02:08:11.167513471Z"
+generated: "2025-10-13T02:11:17.213912227Z"
